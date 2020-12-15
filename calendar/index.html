@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        
+        table td {
+            padding: 10px;
+            border: 1px solid #000;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        let lastNum = 0,
+            startIndex = 0,
+            currentDay = 1,
+            days = ['пн', 'вт', "ср", "чт", "пт", "сб", "вс"],
+            arr = [];
+
+        function init() {
+            lastNum = +prompt('Сколько дней в месяце?');
+            startIndex = days.indexOf(prompt('В какой день недели начинается месяц?'));
+        }
+
+        function resetIndex() {
+            if (startIndex) {
+                startIndex = 0;
+            }
+        }
+
+        function fillWeek() {
+
+            let week = [];
+            for (let d = 0; d < days.length; d++) {
+                let val = ' ';
+                if (d >= startIndex && currentDay <= lastNum) {
+                    val = currentDay;
+                    currentDay++;
+                }
+
+                week[d] = val;
+
+            }
+            resetIndex();
+            arr.push(week);
+        }
+
+        function write(arr) {
+            let str = '<table>';
+            for (let i = 0; i < arr.length; i++) {
+                str += '<tr>';
+                for (let k = 0; k < (arr[i]).length; k++) {
+                    str += '<td>' + arr[i][k] + '</td>';
+                }
+                str += '</tr>';
+            }
+            str += '</table>';
+            document.write(str);
+        }
+
+        init();
+        arr.push(days);
+        while (currentDay <= lastNum) {
+            fillWeek();
+        }
+
+        write(arr);
+    </script>
+
+</body>
+
+</html>
